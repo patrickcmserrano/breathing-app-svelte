@@ -272,7 +272,7 @@
     top: 0;
     left: 0;
     overflow: hidden;
-    z-index: 0;
+    z-index: -1; /* Alterado para -1 para garantir que fique atrás de todo o conteúdo */
     pointer-events: none; /* Garante que cliques passem através da animação */
   }
   

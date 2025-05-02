@@ -7,13 +7,13 @@
   let audio: HTMLAudioElement | null = $state(null);
   let selectedAudio = $state('/sounds/meditation-spiritual-music.mp3');
 
-  // List of available background sounds
+  // Lista de sons de fundo disponíveis
   const audioOptions = [
-    { value: '/sounds/meditation-spiritual-music.mp3', label: 'Meditation Music' },
-    { value: '/sounds/middle-east-oriental-music.mp3', label: 'Oriental Music' },
-    { value: '/sounds/round-of-fairies-quot-irish-harp.mp3', label: 'Irish Harp' },
-    { value: '/sounds/the-voice-of-the-oud.mp3', label: 'The Oud' },
-    { value: '/sounds/tibetan-singing-bowl.mp3', label: 'Tibetan Bowl' }
+    { value: '/sounds/meditation-spiritual-music.mp3', label: 'audio.meditation' },
+    { value: '/sounds/middle-east-oriental-music.mp3', label: 'audio.oriental' },
+    { value: '/sounds/round-of-fairies-quot-irish-harp.mp3', label: 'audio.irish' },
+    { value: '/sounds/the-voice-of-the-oud.mp3', label: 'audio.oud' },
+    { value: '/sounds/tibetan-singing-bowl.mp3', label: 'audio.tibetan' }
   ];
 
   $effect(() => {
@@ -73,7 +73,7 @@
       value={selectedAudio}
     >
       {#each audioOptions as option}
-        <option value={option.value}>{option.label}</option>
+        <option value={option.value}>{$_(option.label)}</option>
       {/each}
     </select>
   </div>

@@ -27,7 +27,7 @@
   }
 </script>
 
-<div class="rounded-md overflow-hidden" title={$_('theme.toggle')}>
+<div class="rounded-md overflow-hidden theme-toggle" title={$_('theme.toggle')}>
   <Switch
     name="theme"
     checked={isDarkMode}
@@ -35,10 +35,18 @@
     controlActive="bg-surface-200"
   >
     {#snippet inactiveChild()}
-      <IconMoon size="20" />
+      <IconMoon size="24" />
     {/snippet}
     {#snippet activeChild()}
-      <IconSun size="20" />
+      <IconSun size="24" />
     {/snippet}
   </Switch>
 </div>
+
+<style>
+  .theme-toggle {
+    display: flex;
+    align-items: center;
+    height: 100%;
+  }
+</style>

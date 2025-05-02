@@ -21,6 +21,14 @@
     }
   }
   
+  // Close settings modal when clicking on backdrop
+  function handleBackdropClick(event: MouseEvent) {
+    // Only close if clicking directly on the backdrop element, not its children
+    if (event.target === event.currentTarget) {
+      showSettings = false;
+    }
+  }
+  
   // Subscribe to the breathingStore to get current settings
   onMount(() => {
     // Add keyboard event listener
@@ -66,7 +74,7 @@
   </button>
   
   {#if showSettings}
-    <div class="modal-backdrop">
+    <div class="modal-backdrop" on:click={handleBackdropClick}>
       <div class="settings-content card p-6 rounded-lg shadow-lg variant-filled-surface">
         <h2 class="text-2xl font-bold mb-4">Breathing Settings</h2>
         

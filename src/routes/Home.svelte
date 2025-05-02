@@ -1,12 +1,10 @@
 <script lang="ts">
   import { onMount } from 'svelte';
   import { _ } from 'svelte-i18n';
-  import ThemeToggle from '../components/ThemeToggle.svelte';
   import BreathingCycle from '../components/BreathingCycle.svelte';
   import Settings from '../components/Settings.svelte';
-  import BlobAnimation from '../components/BlobAnimation.svelte';
   import AudioPlayer from '../components/AudioPlayer.svelte';
-  import LanguageSelector from '../components/LanguageSelector.svelte';
+  import PageLayout from '../components/PageLayout.svelte';
   import { audioStore } from '../stores/audioStore';
   import { breathingStore, type BreathingState } from '../stores/breathingStore';
 
@@ -35,36 +33,15 @@
   }
 </script>
 
-<!-- Componente de animação posicionado fora do container principal -->
-<BlobAnimation baseRadius={150} blurRadius={35} />
-
-<main class="container mx-auto p-4 flex flex-col items-center min-h-screen relative z-10">
-  <div class="flex justify-between w-full mb-8">
-    <div class="theme-toggle">
-      <ThemeToggle />
-    </div>
-    <div class="flex items-center">
-      <LanguageSelector />
-      <div class="settings ml-2">
-        <Settings />
-      </div>
-    </div>
-  </div>
-
-  <div class="menu-content">
-    <nav>
-      <ul class="flex gap-8 justify-center mb-8">
-        <li><strong>{$_('nav.home')}</strong></li>
-        <li><a href="#/about">{$_('nav.about')}</a></li>
-        <li><a href="#/copyright">{$_('nav.copyright')}</a></li>
-      </ul>
-    </nav>  
-  </div>
+<PageLayout currentPage="home">
+  <svelte:fragment slot="rightContent">
+    <Settings />
+  </svelte:fragment>
   
-  <div class="flex flex-col items-center flex-grow">
+  <div class="home-content">
     <h1 class="text-3xl font-bold text-center mb-12">{$_('app.title')}</h1>
     
-    <div class="breathing-container flex-grow flex items-center justify-center">
+    <div class="breathing-container">
       {#if breathingSettings}
         <BreathingCycle 
           bind:this={breathingCycleComponent}
@@ -78,33 +55,52 @@
     </div>
     
     <!-- Background music player -->
-    <div class="mt-8 w-full max-w-md">
-      <h3 class="text-lg font-medium mb-2">Background Music</h3>
+    <div class="music-player">
+      <h3 class="text-lg font-medium mb-2">{$_('audio.player')}</h3>
       <AudioPlayer />
     </div>
+    
+    <footer class="mt-auto py-4 text-center">
+      <p class="text-sm text-gray-500">
+        Take a moment to breathe and relax.
+      </p>
+    </footer>
   </div>
-  
-  <footer class="mt-auto py-4 text-center">
-    <p class="text-sm text-gray-500">
-      Take a moment to breathe and relax.
-    </p>
-  </footer>
-</main>
+</PageLayout>
 
 <style>
-  nav ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
+  .home-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 70vh;
+    /* Remover qualquer background que possa estar bloqueando a animação */
+    background-color: transparent;
   }
-
-  nav a, nav strong {
-    color: var(--color-text);
-    text-decoration: none;
-    font-weight: 600;
+  
+  .breathing-container {
+    flex-grow: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 2rem 0;
+    background-color: transparent;
   }
-
-  nav a:hover {
-    text-decoration: underline;
+  
+  .music-player {
+    width: 100%;
+    max-width: 400px;
+    margin-top: 2rem;
+  }
+  
+  h1 {
+    color: var(--color-primary-500);
+  }
+  
+  @media (max-width: 768px) {
+    .music-player {
+      max-width: 100%;
+      padding: 0 1rem;
+    }
   }
 </style>
