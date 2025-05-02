@@ -4,7 +4,6 @@
   
   export let title: string = '';
   export let currentPage: 'home' | 'about' | 'copyright' = 'home';
-  export let rightContent: any = null;
 </script>
 
 <div class="page-container">

@@ -83,11 +83,6 @@
     height: 100%; /* Garantir altura total */
   }
   
-  .language-settings-container {
-    display: flex;
-    align-items: center;
-  }
-
   .settings-icon {
     margin-left: 0;
     display: flex;
