@@ -14,6 +14,9 @@ pnpm-lock.yaml
 dist/
 .vite/
 
+# Test coverage
+coverage/
+
 # TypeScript
 *.tsbuildinfo
 
