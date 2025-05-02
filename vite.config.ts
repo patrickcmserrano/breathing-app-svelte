@@ -8,4 +8,13 @@ export default defineConfig({
     svelte(),
   ],
   base: process.env.NODE_ENV === 'production' ? '/weboasis/' : './',
+  test: {
+    environment: 'jsdom',
+    globals: true,
+    setupFiles: ['src/test/setup.ts'],
+    coverage: {
+      provider: 'v8',
+      reporter: ['text', 'json', 'html'],
+    },
+  },
 });

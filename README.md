@@ -253,6 +253,77 @@ Esta técnica simples pode ajudar a:
 - Controlar respostas emocionais
 - Diminuir a frequência cardíaca
 
+## Estratégia de Testes
+
+Este projeto implementa uma estratégia de testes abrangente, utilizando diferentes níveis de testes para garantir a qualidade e robustez do aplicativo:
+
+### Testes Unitários (Vitest)
+
+Os testes unitários são implementados com [Vitest](https://vitest.dev/) e [@testing-library/svelte](https://testing-library.com/docs/svelte-testing-library/intro/), focando em componentes individuais e lógica de negócio isoladamente.
+
+```bash
+# Executar testes unitários em modo observador
+npm test
+
+# Executar testes unitários uma única vez
+npm run test:run
+
+# Gerar relatório de cobertura
+npm run test:coverage
+```
+
+**Arquivos relevantes:**
+- `vitest.config.ts` - Configuração do Vitest
+- `src/test/setup.ts` - Configuração global dos testes
+- `**/*.test.ts` - Arquivos de teste distribuídos ao lado dos componentes
+
+### Testes End-to-End (Playwright)
+
+Os testes E2E são implementados com [Playwright](https://playwright.dev/), simulando interações de usuário reais no aplicativo.
+
+```bash
+# Executar testes E2E
+npm run e2e
+
+# Executar testes E2E com interface visual
+npm run e2e:ui
+
+# Visualizar relatório de testes E2E
+npm run e2e:report
+```
+
+**Arquivos relevantes:**
+- `playwright.config.ts` - Configuração do Playwright
+- `e2e-tests/` - Diretório contendo os testes E2E
+
+### CI/CD com GitHub Actions
+
+Os testes são executados automaticamente no pipeline de CI/CD a cada push ou pull request:
+
+- **Fluxo de trabalho:** `.github/workflows/test-coverage.yml`
+- **Ações realizadas:**
+  - Execução de testes unitários
+  - Geração de relatório de cobertura
+  - Execução de testes E2E
+  - Upload de relatórios como artefatos
+  - Publicação de relatório de cobertura no GitHub Pages
+
+### Estratégia de Mocks
+
+Para testes mais eficientes e isolados, utilizamos diferentes estratégias de mocking:
+
+- **Componentes:** Mocks de componentes filhos quando testamos componentes pais
+- **Stores Svelte:** Mocks de stores para testar componentes que dependem deles
+- **APIs do navegador:** Mocks de APIs como Audio, localStorage, etc.
+- **Internacionalização:** Mocks das funções i18n
+
+### Boas Práticas Implementadas
+
+- **Arquivos de teste próximos ao código:** Facilita a navegação e manutenção
+- **Cobertura de código:** Monitoramento de cobertura para identificar áreas não testadas
+- **Testing Library:** Uso de queries baseadas em acessibilidade
+- **Testes isolados:** Cada teste é independente e não depende do estado de outros testes
+
 ## Scripts Disponíveis
 
 ```bash
@@ -270,6 +341,15 @@ npm run check      # Executa verificação de tipos
 
 # Deploy para GitHub Pages
 npm run deploy     # Publica no GitHub Pages
+
+# Testes
+npm test           # Executa testes unitários em modo observador
+npm run test:run   # Executa testes unitários uma única vez
+npm run test:coverage # Gera relatório de cobertura
+npm run e2e        # Executa testes E2E
+npm run e2e:ui     # Executa testes E2E com interface visual
+npm run e2e:report # Visualiza relatório de testes E2E
+npm run test:all   # Executa testes unitários e E2E sequencialmente
 ```
 
 ## Como Começar
