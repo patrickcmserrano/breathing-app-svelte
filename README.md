@@ -1,83 +1,283 @@
-# Breathing App - Svelte + TypeScript + Vite
+# WebOasis 4-7-8 - Aplicativo de Respiração
 
-Este é um projeto Svelte moderno que utiliza TypeScript e Vite como bundler. Aqui está um guia detalhado de como este projeto foi criado e configurado.
+Um aplicativo web moderno para técnicas de respiração, construído com Svelte 5, TypeScript e Vite. O aplicativo implementa a técnica de respiração 4-7-8, conhecida por ajudar a reduzir ansiedade e melhorar o sono.
 
-## Criação do Projeto
+![Captura de tela do WebOasis 4-7-8](./public/screenshot.png)
 
-1. **Inicialização do Projeto**
-   ```bash
-   npm create vite@latest breathing-app-svelte -- --template svelte-ts
-   cd breathing-app-svelte
-   npm install
+## Funcionalidades
+
+- ✨ **Animação de respiração visual** - Guia visual para a técnica 4-7-8
+- 🔊 **Guia de áudio** - Indicações sonoras para cada fase da respiração
+- 🌙 **Modo claro/escuro** - Troca de tema adaptável às suas preferências
+- 🎵 **Música de fundo** - Escolha entre diferentes sons relaxantes
+- 🌐 **Suporte multilíngue** - Disponível em 7 idiomas (EN, PT, ES, FR, ZH, HI, AR)
+- ⚙️ **Configurações personalizáveis** - Ajuste a duração de cada fase da respiração
+- 📱 **Design responsivo** - Funciona em dispositivos móveis, tablets e desktops
+
+## Tecnologias Utilizadas
+
+- **Frontend**: Svelte 5, TypeScript, TailwindCSS
+- **Estilização**: Skeleton UI, CSS personalizado
+- **Internacionalização**: svelte-i18n
+- **Roteamento**: svelte-spa-router
+- **Animações**: Animações SVG personalizadas, Svelte Tweens
+- **Ferramentas**: Vite, ESLint, TypeScript
+- **Deploy**: GitHub Pages
+
+## Configuração Svelte 5
+
+Este projeto utiliza Svelte 5, que introduz várias melhorias significativas em relação às versões anteriores:
+
+### Recursos do Svelte 5 implementados:
+
+1. **Reativos com `$state`, `$derived` e `$effect`**
+   ```svelte
+   <!-- Exemplo de uso -->
+   <script lang="ts">
+     let count = $state(0);
+     let doubled = $derived(count * 2);
+     
+     $effect(() => {
+       console.log(`Count mudou para ${count}, dobrado é ${doubled}`);
+     });
+   </script>
    ```
 
-2. **Estrutura do Projeto**
-   ```
-   📦 breathing-app-svelte
-   ├── 📂 public/
-   │   └── vite.svg
-   ├── 📂 src/
-   │   ├── 📂 assets/
-   │   │   └── svelte.svg
-   │   ├── 📂 lib/
-   │   │   └── Counter.svelte
-   │   ├── 📂 styles/
-   │   │   └── global.css
-   │   ├── app.css
-   │   ├── App.svelte
-   │   ├── main.ts
-   │   └── vite-env.d.ts
-   ├── index.html
-   ├── package.json
-   ├── svelte.config.js
-   ├── tsconfig.json
-   ├── tsconfig.node.json
-   └── vite.config.ts
+2. **Sistema de "snippets" para conteúdo reutilizável**
+   ```svelte
+   <!-- Em ThemeToggle.svelte -->
+   {#snippet activeChild()}
+     <IconSun size="24" />
+   {/snippet}
    ```
 
-## Dependências do Projeto
+3. **Melhor desempenho** com compilador otimizado e atualizações granulares
+  
+4. **Integração TypeScript aprimorada** com inferência de tipos mais precisa
 
-### Dependências Principais
-- `svelte`: ^5.23.1
-- `@skeletonlabs/skeleton`: ^3.1.3
+### Configuração do Svelte:
 
-### Dependências de Desenvolvimento
-- `@sveltejs/vite-plugin-svelte`: ^5.0.3
-- `@tsconfig/svelte`: ^5.0.4
-- `svelte-check`: ^4.1.5
-- `typescript`: ~5.7.2
-- `vite`: ^6.3.1
+O arquivo `svelte.config.js` configura o pré-processador Svelte:
 
-## Scripts Disponíveis
+```js
+import { vitePreprocess } from '@sveltejs/vite-plugin-svelte'
 
-```json
-{
-  "dev": "vite",          // Inicia o servidor de desenvolvimento
-  "build": "vite build",  // Gera build de produção
-  "preview": "vite preview", // Prévia da versão de produção
-  "check": "svelte-check" // Executa verificação de tipos TypeScript
+export default {
+  preprocess: vitePreprocess(),
 }
 ```
 
-## Configuração do Ambiente de Desenvolvimento
+Esta configuração permite:
+- Processamento de TypeScript
+- Suporte a PostCSS/TailwindCSS
+- Carregamento de módulos CSS
 
-### IDE Recomendada
-- Visual Studio Code com a extensão Svelte para VS Code
-- [VS Code](https://code.visualstudio.com/)
-- [Extensão Svelte](https://marketplace.visualstudio.com/items?itemName=svelte.svelte-vscode)
+## Estrutura do Projeto
 
-### Configuração do TypeScript
+```
+📦 breathing-app-svelte
+├── 📂 public/
+│   ├── 📂 sounds/           # Arquivos de áudio para respiração e música de fundo
+│   └── favicon.ico
+├── 📂 src/
+│   ├── 📂 components/       # Componentes reutilizáveis
+│   │   ├── AudioPlayer.svelte
+│   │   ├── BlobAnimation.svelte
+│   │   ├── BreathingCycle.svelte
+│   │   ├── LanguageSelector.svelte
+│   │   ├── NavMenu.svelte
+│   │   ├── PageLayout.svelte
+│   │   ├── Settings.svelte
+│   │   └── ThemeToggle.svelte
+│   ├── 📂 lib/              # Bibliotecas e utilidades
+│   │   ├── 📂 locales/      # Arquivos de tradução
+│   │   │   ├── ar.ts        # Árabe
+│   │   │   ├── en.ts        # Inglês
+│   │   │   ├── es.ts        # Espanhol
+│   │   │   ├── fr.ts        # Francês
+│   │   │   ├── hi.ts        # Hindi
+│   │   │   ├── pt.ts        # Português
+│   │   │   └── zh.ts        # Chinês
+│   │   └── i18n.ts          # Configuração de internacionalização
+│   ├── 📂 routes/           # Componentes de página
+│   │   ├── About.svelte
+│   │   ├── Copyright.svelte
+│   │   └── Home.svelte
+│   ├── 📂 stores/           # Gerenciamento de estado
+│   │   ├── audioStore.ts
+│   │   └── breathingStore.ts
+│   ├── 📂 styles/           # Estilos globais
+│   │   └── global.css
+│   ├── App.svelte           # Componente raiz
+│   └── main.ts              # Ponto de entrada da aplicação
+└── ... (arquivos de configuração)
+```
 
-O projeto utiliza TypeScript com as seguintes configurações principais:
-- Suporte total ao TypeScript em componentes Svelte
-- Configuração otimizada para desenvolvimento Svelte
-- Verificação de tipos integrada
+## Deploy com GitHub Pages
 
-## Como Iniciar o Desenvolvimento
+O projeto está configurado para deploy automático no GitHub Pages usando GitHub Actions. O workflow realiza as seguintes etapas:
+
+1. **Checkout do código**
+2. **Setup do Node.js** (versão 20)
+3. **Instalação de dependências**
+4. **Build do projeto**
+5. **Deploy para GitHub Pages**
+
+### Configuração do workflow:
+
+O arquivo `.github/workflows/deploy.yml` define o processo automatizado:
+
+```yml
+name: Deploy Svelte App to GitHub Pages
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install and Build
+        run: |
+          npm ci
+          npm run build
+
+      - name: Create .nojekyll
+        run: touch dist/.nojekyll
+
+      - name: Upload Artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
+```
+
+### Configuração para GitHub Pages:
+
+Para que o aplicativo funcione corretamente no GitHub Pages, o arquivo `vite.config.ts` inclui uma configuração especial para o caminho base:
+
+```ts
+export default defineConfig({
+  plugins: [
+    tailwindcss(),
+    svelte(),
+  ],
+  base: process.env.NODE_ENV === 'production' ? '/weboasis/' : './',
+});
+```
+
+Isso garante que os caminhos dos recursos (JavaScript, CSS, imagens, etc.) sejam gerados corretamente:
+- Em desenvolvimento: caminhos relativos
+- Em produção: caminhos prefixados com `/weboasis/`
+
+Adicionalmente, o arquivo `404.html` está configurado para redirecionar corretamente as solicitações em caso de atualização da página ou acesso direto a uma rota:
+
+```html
+<script>
+  // Redirect to index.html with hash routing
+  const path = window.location.pathname;
+  const repo = '/weboasis/';
+  
+  // Extract the path after the repo name to convert to hash route
+  let route = '';
+  if (path.indexOf(repo) !== -1) {
+    route = path.slice(path.indexOf(repo) + repo.length);
+    if (route.startsWith('/')) route = route.substring(1);
+  }
+  
+  // Redirect to home with the hash route
+  window.location.href = window.location.origin + repo + (route ? '#/' + route : '');
+</script>
+```
+
+### Deploy Manual:
+
+Para realizar um deploy manual do projeto:
+
+```bash
+# Compila o projeto para produção
+npm run build
+
+# Publica no GitHub Pages usando gh-pages
+npm run deploy
+```
+
+O script `deploy` está configurado no package.json para utilizar o pacote `gh-pages`:
+
+```json
+"scripts": {
+  "predeploy": "npm run build",
+  "deploy": "gh-pages -d dist"
+}
+```
+
+## Técnica de Respiração 4-7-8
+
+Este aplicativo implementa a técnica de respiração 4-7-8, desenvolvida pelo Dr. Andrew Weil:
+
+1. **Inale** pelo nariz por 4 segundos
+2. **Segure** a respiração por 7 segundos
+3. **Exale** pela boca por 8 segundos
+4. **Repita** o ciclo
+
+Esta técnica simples pode ajudar a:
+- Reduzir a ansiedade
+- Melhorar o sono
+- Controlar respostas emocionais
+- Diminuir a frequência cardíaca
+
+## Scripts Disponíveis
+
+```bash
+# Desenvolvimento
+npm run dev        # Inicia servidor de desenvolvimento
+
+# Build para produção
+npm run build      # Gera versão otimizada para produção
+
+# Preview
+npm run preview    # Visualiza a versão de produção localmente
+
+# Verifica tipos TypeScript
+npm run check      # Executa verificação de tipos
+
+# Deploy para GitHub Pages
+npm run deploy     # Publica no GitHub Pages
+```
+
+## Como Começar
 
 1. **Clone o repositório**
    ```bash
-   git clone [URL-DO-REPOSITÓRIO]
+   git clone https://github.com/seu-usuario/breathing-app-svelte.git
+   cd breathing-app-svelte
    ```
 
 2. **Instale as dependências**
@@ -91,50 +291,18 @@ O projeto utiliza TypeScript com as seguintes configurações principais:
    ```
 
 4. **Acesse o projeto**
-   O projeto estará disponível em `http://localhost:5173`
+   O aplicativo estará disponível em `http://localhost:5173`
 
-## Estrutura de Arquivos Explicada
+## Deploy
 
-- `/public`: Arquivos estáticos que serão servidos diretamente
-- `/src`: Código fonte da aplicação
-  - `/assets`: Recursos como imagens e ícones
-  - `/lib`: Componentes reutilizáveis
-  - `/styles`: Arquivos de estilo globais
-  - `App.svelte`: Componente raiz da aplicação
-  - `main.ts`: Ponto de entrada da aplicação
+O aplicativo está configurado para deploy automático no GitHub Pages usando GitHub Actions.
+Cada push para a branch `main` aciona uma build e deploy automático.
 
-## Considerações Técnicas
+## Licença
 
-### Por que Vite?
-- Hot Module Replacement (HMR) extremamente rápido
-- Configuração zero para começar
-- Suporte nativo a TypeScript
-- Build otimizado para produção
+Este projeto está licenciado sob a licença MIT - veja o arquivo LICENSE para detalhes.
 
-### TypeScript
-O projeto usa TypeScript para:
-- Melhor experiência de desenvolvimento
-- Verificação de tipos em tempo real
-- Melhor suporte da IDE
-- Código mais seguro e manutenível
+## Créditos
 
-## Build e Deploy
-
-Para criar uma build de produção:
-```bash
-npm run build
-```
-
-Isso gerará uma versão otimizada do projeto na pasta `dist/`.
-
-## Contribuindo
-
-1. Faça um fork do projeto
-2. Crie uma branch para sua feature (`git checkout -b feature/AmazingFeature`)
-3. Commit suas mudanças (`git commit -m 'Add some AmazingFeature'`)
-4. Push para a branch (`git push origin feature/AmazingFeature`)
-5. Abra um Pull Request
-
-## Suporte
-
-Para questões e suporte, por favor abra uma issue no repositório do projeto.
+- Áudios utilizados neste projeto são fornecidos por [Pixabay](https://pixabay.com/)
+- Desenvolvido por Patrick CM Serrano
