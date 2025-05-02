@@ -1,6 +1,8 @@
 <script>
   import BlobAnimation from '../components/BlobAnimation.svelte';
   import ThemeToggle from '../components/ThemeToggle.svelte';
+  import LanguageSelector from '../components/LanguageSelector.svelte';
+  import { _ } from 'svelte-i18n';
 </script>
 
 <div class="page-container">
@@ -8,52 +10,61 @@
   <BlobAnimation baseRadius={150} blurRadius={35} />
   
   <div class="menu grid">
+    <div class="theme-switch">
+      <ThemeToggle />
+    </div>
     <div class="menu-content">
       <nav>
         <ul>
-          <li><a href="#/">Home</a></li>
-          <li><a href="#/about">About</a></li>
-          <li><strong>Copyright</strong></li>
+          <li><a href="#/">{$_('nav.home')}</a></li>
+          <li><a href="#/about">{$_('nav.about')}</a></li>
+          <li><strong>{$_('nav.copyright')}</strong></li>
         </ul>
       </nav>  
     </div>
-    <div class="theme-switch">
-      <ThemeToggle />
+    <div class="language-selector">
+      <LanguageSelector />
     </div>
   </div>
 
   <main class="container content-page">
     <article>
       <header>
-        <h1>Copyright Information</h1>
+        <h1>{$_('copyright.title')}</h1>
       </header>
       <section>
-        <h3>Important Notes</h3>
+        <p>{$_('copyright.content')}</p>
+        
+        <h3>{$_('copyright.important_notes')}</h3>
         <ul>
-          <li>Attribution is not required but appreciated.</li>
-          <li>You can use the audio files in commercial and non-commercial projects.</li>
-          <li>You cannot resell or redistribute the audio files.</li>
-          <li>Some audio files may have additional restrictions specified on the download page (e.g., non-commercial use only).</li>
+          <li>{$_('copyright.attribution')}</li>
+          <li>{$_('copyright.usage')}</li>
+          <li>{$_('copyright.resell')}</li>
+          <li>{$_('copyright.restrictions')}</li>
         </ul>
         
-        <h3>Audio Tracks Used in This Project</h3>
+        <h3>{$_('copyright.audio_tracks')}</h3>
         <ul>
-          <li>Meditation Spiritual Music</li>
-          <li>Middle East Oriental Music</li>
-          <li>Irish Harp</li>
-          <li>Voice of the Oud</li>
-          <li>Tibetan Singing Bowl</li>
+          <li>{$_('copyright.track1')}</li>
+          <li>{$_('copyright.track2')}</li>
+          <li>{$_('copyright.track3')}</li>
+          <li>{$_('copyright.track4')}</li>
+          <li>{$_('copyright.track5')}</li>
         </ul>
         
         <p>
-          All audio tracks are provided by 
+          {$_('copyright.provided_by')} 
           <a href="https://pixabay.com/" target="_blank" rel="noopener">Pixabay</a>.
         </p>
         <p>
-          For full license details, visit the 
-          <a href="https://pixabay.com/service/terms/" target="_blank" rel="noopener">Pixabay Terms of Service</a>.
+          {$_('copyright.license_details')} 
+          <a href="https://pixabay.com/service/terms/" target="_blank" rel="noopener">{$_('copyright.terms')}</a>.
         </p>
       </section>
+      
+      <div class="back-link">
+        <a href="#/">{$_('back')}</a>
+      </div>
     </article>
   </main>
 </div>
@@ -78,6 +89,11 @@
     flex-grow: 1;
     display: flex;
     justify-content: center;
+  }
+  
+  .language-selector {
+    display: flex;
+    align-items: center;
   }
 
   nav ul {
@@ -107,6 +123,11 @@
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     position: relative;
     z-index: 10;
+  }
+  
+  .back-link {
+    margin-top: 2rem;
+    text-align: center;
   }
 
   h1, h2, h3 {

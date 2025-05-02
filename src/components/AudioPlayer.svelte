@@ -1,6 +1,7 @@
 <script lang="ts">
   import IconPlay from '@lucide/svelte/icons/play';
   import IconPause from '@lucide/svelte/icons/pause';
+  import { _ } from 'svelte-i18n';
 
   let isPlaying = $state(false);
   let audio: HTMLAudioElement | null = $state(null);
@@ -77,7 +78,7 @@
     </select>
   </div>
   
-  <span class="text-sm">{isPlaying ? 'Playing' : 'Paused'}</span>
+  <span class="text-sm">{isPlaying ? $_('audio.playing') : $_('audio.paused')}</span>
 </div>
 
 <style>

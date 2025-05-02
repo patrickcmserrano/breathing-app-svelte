@@ -3,6 +3,7 @@
   import IconMoon from '@lucide/svelte/icons/moon';
   import IconSun from '@lucide/svelte/icons/sun';
   import { onMount } from 'svelte';
+  import { _ } from 'svelte-i18n';
 
   let isDarkMode = $state(true);
 
@@ -26,7 +27,7 @@
   }
 </script>
 
-<div class="rounded-md overflow-hidden">
+<div class="rounded-md overflow-hidden" title={$_('theme.toggle')}>
   <Switch
     name="theme"
     checked={isDarkMode}

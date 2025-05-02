@@ -1,10 +1,12 @@
 <script lang="ts">
   import { onMount } from 'svelte';
+  import { _ } from 'svelte-i18n';
   import ThemeToggle from '../components/ThemeToggle.svelte';
   import BreathingCycle from '../components/BreathingCycle.svelte';
   import Settings from '../components/Settings.svelte';
   import BlobAnimation from '../components/BlobAnimation.svelte';
   import AudioPlayer from '../components/AudioPlayer.svelte';
+  import LanguageSelector from '../components/LanguageSelector.svelte';
   import { audioStore } from '../stores/audioStore';
   import { breathingStore, type BreathingState } from '../stores/breathingStore';
 
@@ -41,23 +43,26 @@
     <div class="theme-toggle">
       <ThemeToggle />
     </div>
-    <div class="settings">
-      <Settings />
+    <div class="flex items-center">
+      <LanguageSelector />
+      <div class="settings ml-2">
+        <Settings />
+      </div>
     </div>
   </div>
 
   <div class="menu-content">
     <nav>
       <ul class="flex gap-8 justify-center mb-8">
-        <li><strong>Home</strong></li>
-        <li><a href="#/about">About</a></li>
-        <li><a href="#/copyright">Copyright</a></li>
+        <li><strong>{$_('nav.home')}</strong></li>
+        <li><a href="#/about">{$_('nav.about')}</a></li>
+        <li><a href="#/copyright">{$_('nav.copyright')}</a></li>
       </ul>
     </nav>  
   </div>
   
   <div class="flex flex-col items-center flex-grow">
-    <h1 class="text-3xl font-bold text-center mb-12">4-7-8 Breathing App</h1>
+    <h1 class="text-3xl font-bold text-center mb-12">{$_('app.title')}</h1>
     
     <div class="breathing-container flex-grow flex items-center justify-center">
       {#if breathingSettings}

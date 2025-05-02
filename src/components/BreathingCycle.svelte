@@ -16,6 +16,7 @@
   import { Tween } from 'svelte/motion';
   import { breathingStore } from '../stores/breathingStore';
   import { audioStore } from '../stores/audioStore';
+  import { _ } from 'svelte-i18n';
 
   // Default durations in seconds
   export let inhaleDuration = 4;
@@ -115,6 +116,22 @@
     }
   }
 
+  // Map phase to translation key
+  function getPhaseTranslationKey(phase: PhaseType): string {
+    switch(phase) {
+      case PHASE.INHALE:
+        return 'breathing.inhale';
+      case PHASE.HOLD:
+        return 'breathing.hold';
+      case PHASE.EXHALE:
+        return 'breathing.exhale';
+      case PHASE.PAUSED:
+        return 'breathing.pause';
+      default:
+        return 'breathing.' + phase;
+    }
+  }
+
   // Update animation scale based on the current phase
   $: {
     if (currentPhase === PHASE.INHALE) {
@@ -142,23 +159,23 @@
     style="transform: scale({animationScale.current})"
   >
     <div class="inner-circle flex items-center justify-center">
-      <span class="font-bold text-lg">{currentPhase.toUpperCase()}</span>
+      <span class="font-bold text-lg">{$_(getPhaseTranslationKey(currentPhase)).toUpperCase()}</span>
     </div>
   </div>
   
   <div class="mt-4 text-center">
     <p class="text-2xl font-bold">{timeRemaining}</p>
-    <p class="text-lg capitalize">{currentPhase}</p>
+    <p class="text-lg capitalize">{$_(getPhaseTranslationKey(currentPhase))}</p>
   </div>
   
   <div class="mt-6">
     {#if isRunning}
       <button on:click={pauseBreathing} class="btn variant-filled-primary">
-        Pause
+        {$_('breathing.pause')}
       </button>
     {:else}
       <button on:click={startBreathing} class="btn variant-filled-primary">
-        Start
+        {$_('breathing.start')}
       </button>
     {/if}
   </div>

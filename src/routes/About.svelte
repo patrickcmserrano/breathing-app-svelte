@@ -1,6 +1,8 @@
 <script>
   import BlobAnimation from '../components/BlobAnimation.svelte';
   import ThemeToggle from '../components/ThemeToggle.svelte';
+  import LanguageSelector from '../components/LanguageSelector.svelte';
+  import { _ } from 'svelte-i18n';
 </script>
 
 <div class="page-container">
@@ -8,28 +10,30 @@
   <BlobAnimation baseRadius={150} blurRadius={35} />
   
   <div class="menu grid">
+    <div class="theme-switch">
+      <ThemeToggle />
+    </div>
     <div class="menu-content">
       <nav>
         <ul>
-          <li><a href="#/">Home</a></li>
-          <li><strong>About</strong></li>
-          <li><a href="#/copyright">Copyright</a></li>
+          <li><a href="#/">{$_('nav.home')}</a></li>
+          <li><strong>{$_('nav.about')}</strong></li>
+          <li><a href="#/copyright">{$_('nav.copyright')}</a></li>
         </ul>
       </nav>  
     </div>
-    <div class="theme-switch">
-      <ThemeToggle />
+    <div class="language-selector">
+      <LanguageSelector />
     </div>
   </div>
 
   <main class="container content-page">
     <article>
       <header>
-        <h1>About This Project</h1>
+        <h1>{$_('about.title')}</h1>
       </header>
       <section>
-        <h2>4-7-8 Breathing Exercise App</h2>
-        <p>This web application is designed to guide users through the 4-7-8 breathing technique, a simple yet powerful relaxation exercise that can help reduce anxiety and promote better sleep.</p>
+        <p>{$_('about.content')}</p>
         
         <h3>Features</h3>
         <ul>
@@ -37,6 +41,7 @@
           <li>Customizable background sounds for enhanced relaxation</li>
           <li>Dark/light theme support</li>
           <li>Responsive design for all devices</li>
+          <li>Multiple language support</li>
         </ul>
 
         <h3>Developer</h3>
@@ -46,6 +51,10 @@
         <p>This project is open source and available on GitHub. Feel free to contribute, report issues, or fork the repository:</p>
         <p><a href="https://github.com/patrickcmserrano/breathing-app" target="_blank" rel="noopener">View on GitHub</a></p>
       </section>
+      
+      <div class="back-link">
+        <a href="#/">{$_('back')}</a>
+      </div>
     </article>
   </main>
 </div>
@@ -70,6 +79,11 @@
     flex-grow: 1;
     display: flex;
     justify-content: center;
+  }
+
+  .language-selector {
+    display: flex;
+    align-items: center;
   }
 
   nav ul {
@@ -99,6 +113,11 @@
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     position: relative;
     z-index: 10;
+  }
+
+  .back-link {
+    margin-top: 2rem;
+    text-align: center;
   }
 
   h1, h2, h3 {
