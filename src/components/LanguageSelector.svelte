@@ -8,7 +8,7 @@
   }
 
   // Get the current language
-  let currentLocale: string;
+  let currentLocale: string | null | undefined;
   locale.subscribe(value => {
     currentLocale = value;
   });
@@ -63,6 +63,20 @@
     aria-label="Français"
   >
     FR
+  </button>
+  <button 
+    class={currentLocale === 'de' ? 'active' : ''} 
+    on:click={() => setLanguage('de')}
+    aria-label="Deutsch"
+  >
+    DE
+  </button>
+  <button 
+    class={currentLocale === 'ja' ? 'active' : ''} 
+    on:click={() => setLanguage('ja')}
+    aria-label="日本語"
+  >
+    JA
   </button>
 </div>
 

@@ -9,9 +9,11 @@ import zh from './locales/zh';
 import hi from './locales/hi';
 import ar from './locales/ar';
 import fr from './locales/fr';
+import ja from './locales/ja';
+import de from './locales/de';
 
 // Language definitions
-export const SUPPORTED_LANGUAGES = ['en', 'pt', 'es', 'zh', 'hi', 'ar', 'fr'] as const;
+export const SUPPORTED_LANGUAGES = ['en', 'pt', 'es', 'zh', 'hi', 'ar', 'fr', 'ja', 'de'] as const;
 export type SupportedLanguage = typeof SUPPORTED_LANGUAGES[number];
 
 export const translations = {
@@ -56,6 +58,18 @@ export const translations = {
     hold: 'امسك',
     exhale: 'زفير',
     rest: 'استراحة'
+  },
+  ja: {
+    inhale: '吸う',
+    hold: '止める',
+    exhale: '吐く',
+    rest: '休憩'
+  },
+  de: {
+    inhale: 'Einatmen',
+    hold: 'Halten',
+    exhale: 'Ausatmen',
+    rest: 'Ruhe'
   }
 };
 
@@ -67,6 +81,8 @@ addMessages('zh', zh);
 addMessages('hi', hi);
 addMessages('ar', ar);
 addMessages('fr', fr);
+addMessages('ja', ja);
+addMessages('de', de);
 
 // Initialize i18n with appropriate settings
 export function setupI18n() {
