@@ -1,5 +1,5 @@
 export default {
-  "app.title": "Aplicación de Respiración 4-7-8",
+  "app.title": "WebOasis 4-7-8",
   "app.loading_settings": "Cargando configuraciones...",
   "app.breathe_relax": "Toma un momento para respirar y relajarte.",
   "theme.toggle": "Cambiar Tema",

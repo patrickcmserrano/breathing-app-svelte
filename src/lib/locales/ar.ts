@@ -1,5 +1,5 @@
 export default {
-  "app.title": "تطبيق التنفس 4-7-8",
+  "app.title": "WebOasis 4-7-8",
   "app.loading_settings": "جاري تحميل الإعدادات...",
   "app.breathe_relax": "خذ لحظة للتنفس والاسترخاء.",
   "theme.toggle": "تبديل السمة",

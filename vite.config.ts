@@ -7,5 +7,5 @@ export default defineConfig({
     tailwindcss(),
     svelte(),
   ],
-  base: process.env.NODE_ENV === 'production' ? '/breathing-app-svelte/' : './',
+  base: process.env.NODE_ENV === 'production' ? '/weboasis/' : './',
 });
