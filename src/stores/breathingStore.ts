@@ -10,6 +10,7 @@ export interface BreathingState {
     inhaleDuration: number;
     holdDuration: number;
     exhaleDuration: number;
+    restDuration: number;
     soundsEnabled: boolean;
     volume: number;
   }
@@ -22,7 +23,12 @@ const getSavedSettings = () => {
     
     if (savedSettings) {
       try {
-        return JSON.parse(savedSettings);
+        const parsed = JSON.parse(savedSettings);
+        // Ensure restDuration is included in existing saved settings
+        return {
+          ...parsed,
+          restDuration: parsed.restDuration ?? 2
+        };
       } catch (e) {
         console.error('Error parsing saved settings:', e);
       }
@@ -34,6 +40,7 @@ const getSavedSettings = () => {
     inhaleDuration: 4,
     holdDuration: 7,
     exhaleDuration: 8,
+    restDuration: 2,
     soundsEnabled: true,
     volume: 0.7
   };

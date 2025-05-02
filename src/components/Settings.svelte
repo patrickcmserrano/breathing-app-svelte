@@ -8,6 +8,7 @@
     inhaleDuration: 4,
     holdDuration: 7,
     exhaleDuration: 8,
+    restDuration: 2,
     soundsEnabled: true,
     volume: 0.7
   };
@@ -107,6 +108,18 @@
               bind:value={settings.exhaleDuration} 
               min="1" 
               max="15" 
+              class="input variant-form-material"
+            />
+          </div>
+
+          <div class="form-field mb-2">
+            <label for="restDuration" class="label font-medium">Rest:</label>
+            <input 
+              type="number" 
+              id="restDuration" 
+              bind:value={settings.restDuration} 
+              min="0" 
+              max="10" 
               class="input variant-form-material"
             />
           </div>
