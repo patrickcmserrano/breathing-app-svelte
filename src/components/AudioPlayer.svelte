@@ -5,6 +5,8 @@
 
   let isPlaying = $state(false);
   let audio: HTMLAudioElement | null = $state(null);
+  
+  // Using relative paths works better for GitHub Pages deployment
   let selectedAudio = $state('./sounds/meditation-spiritual-music.mp3');
 
   // Lista de sons de fundo disponíveis

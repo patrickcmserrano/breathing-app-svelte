@@ -5,27 +5,24 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Breathing App</title>
     <script>
-      // Single Page App for GitHub Pages
-      // MIT License
-      // Adapted from https://github.com/rafgraph/spa-github-pages
-      (function() {
-        // This script takes the current URL and redirects to the route in your SPA
-        var l = window.location;
-        var pathSegmentsToKeep = 1; // Keep the first segment (repo name)
-        
-        // Get the repository name from the current URL
-        var repoName = l.pathname.split('/')[1];
-        var newUrl = l.protocol + '//' + l.hostname + (l.port ? ':' + l.port : '') + '/' + repoName + '/?p=';
-        
-        // Everything after the repository name becomes the route
-        var route = l.pathname.slice(('/' + repoName).length);
-        
-        // Redirect with the route as a parameter
-        l.replace(newUrl + encodeURIComponent(route) + l.search);
-      })();
+      // Redirect to index.html with hash routing
+      const path = window.location.pathname;
+      const repo = '/breathing-app-svelte/';
+      
+      // Extract the path after the repo name to convert to hash route
+      // This handles URLs like username.github.io/breathing-app-svelte/about
+      let route = '';
+      if (path.indexOf(repo) !== -1) {
+        route = path.slice(path.indexOf(repo) + repo.length);
+        // Remove leading slash if present
+        if (route.startsWith('/')) route = route.substring(1);
+      }
+      
+      // Redirect to home with the hash route
+      window.location.href = window.location.origin + repo + (route ? '#/' + route : '');
     </script>
   </head>
   <body>
-    <p>Redirecting...</p>
+    <p>Redirecting to app...</p>
   </body>
 </html>

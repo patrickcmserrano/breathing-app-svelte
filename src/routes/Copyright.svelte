@@ -1,6 +1,7 @@
 <script>
   import PageLayout from '../components/PageLayout.svelte';
   import { _ } from 'svelte-i18n';
+  import { link } from 'svelte-spa-router';
 </script>
 
 <PageLayout currentPage="copyright" title={$_('copyright.title')}>
@@ -36,7 +37,7 @@
     </section>
     
     <div class="back-link">
-      <a href="#/">{$_('back')}</a>
+      <a href="#/" use:link>{$_('back')}</a>
     </div>
   </article>
 </PageLayout>

@@ -7,5 +7,5 @@ export default defineConfig({
     tailwindcss(),
     svelte(),
   ],
-  base: '/breathing-app-svelte/',
+  base: process.env.NODE_ENV === 'production' ? '/breathing-app-svelte/' : './',
 });

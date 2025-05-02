@@ -2,6 +2,7 @@
   import { _ } from 'svelte-i18n';
   import ThemeToggle from './ThemeToggle.svelte';
   import LanguageSelector from './LanguageSelector.svelte';
+  import { link } from 'svelte-spa-router';
   
   // Prop para a página atual, para destacar o item de menu correto
   export let currentPage: 'home' | 'about' | 'copyright' = 'home';
@@ -21,21 +22,21 @@
           {#if currentPage === 'home'}
             <strong>{$_('nav.home')}</strong>
           {:else}
-            <a href="#/">{$_('nav.home')}</a>
+            <a href="#/" use:link>{$_('nav.home')}</a>
           {/if}
         </li>
         <li>
           {#if currentPage === 'about'}
             <strong>{$_('nav.about')}</strong>
           {:else}
-            <a href="#/about">{$_('nav.about')}</a>
+            <a href="#/about" use:link>{$_('nav.about')}</a>
           {/if}
         </li>
         <li>
           {#if currentPage === 'copyright'}
             <strong>{$_('nav.copyright')}</strong>
           {:else}
-            <a href="#/copyright">{$_('nav.copyright')}</a>
+            <a href="#/copyright" use:link>{$_('nav.copyright')}</a>
           {/if}
         </li>
       </ul>

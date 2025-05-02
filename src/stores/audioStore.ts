@@ -1,11 +1,18 @@
 import { writable, derived } from 'svelte/store';
 import { breathingStore } from './breathingStore';
 
+// Define sound paths with dynamic base path for proper GitHub Pages deployment
+const getBasePath = () => {
+  // In development, use relative paths
+  // In production with GitHub Pages, paths must account for the base
+  return './';
+};
+
 // Define sound paths - these will need to be present in the public/sounds directory
 const soundPaths = {
-  inhale: './sounds/inhale.mp3',
-  hold: './sounds/hold.mp3',
-  exhale: './sounds/exhale.mp3'
+  inhale: `${getBasePath()}sounds/inhale.mp3`,
+  hold: `${getBasePath()}sounds/hold.mp3`,
+  exhale: `${getBasePath()}sounds/exhale.mp3`
 };
 
 // Audio store type

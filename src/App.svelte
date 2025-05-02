@@ -1,15 +1,14 @@
 <script lang="ts">
   import Router from 'svelte-spa-router';
+  import { push, location } from 'svelte-spa-router';
+  import { onMount } from 'svelte';
   
   // Import routes
   import Home from './routes/Home.svelte';
   import About from './routes/About.svelte';
   import Copyright from './routes/Copyright.svelte';
   
-  // Get the base path from Vite environment if available
-  const basePath = import.meta.env.BASE_URL || '/';
-  
-  // Define routes
+  // Define routes - using hash-based routing which works well with GitHub Pages
   const routes = {
     // Exact path
     '/': Home,
@@ -23,6 +22,15 @@
     // Catch-all, must be last
     '*': Home,
   };
+  
+  // Handle any initial routing issues
+  onMount(() => {
+    // If we're on GitHub Pages and somehow end up with an empty location
+    // or if the location is missing the hash, redirect to home
+    if ($location === '' || !window.location.hash) {
+      push('/');
+    }
+  });
 </script>
 
 <Router {routes} />
