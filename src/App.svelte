@@ -6,6 +6,7 @@
   import BreathingCycle from './components/BreathingCycle.svelte';
   import Settings from './components/Settings.svelte';
   import BlobAnimation from './components/BlobAnimation.svelte';
+  import AudioPlayer from './components/AudioPlayer.svelte';
   import { audioStore } from './stores/audioStore';
   import { breathingStore, type BreathingState } from './stores/breathingStore';
 
@@ -61,6 +62,12 @@
       {:else}
         <div class="loading">Loading settings...</div>
       {/if}
+    </div>
+    
+    <!-- Background music player -->
+    <div class="mt-8 w-full max-w-md">
+      <h3 class="text-lg font-medium mb-2">Background Music</h3>
+      <AudioPlayer />
     </div>
   </div>
   
