@@ -30,7 +30,8 @@ test.describe('Breathing App E2E Tests', () => {
       // Verify the URL contains "about"
       await expect(page).toHaveURL(/.*about.*/i);
     } else {
-      test.skip('About link not found, skipping test');
+      // Corrigindo uso do test.skip para o formato correto
+      test.skip(true, 'About link not found, skipping test');
     }
   });
 
