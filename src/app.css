@@ -53,10 +53,21 @@ button {
   font-size: 1em;
   font-weight: 500;
   font-family: inherit;
-  background-color: #1a1a1a;
   cursor: pointer;
-  transition: border-color 0.25s;
+  transition: border-color 0.25s, background-color 0.25s;
 }
+
+/* Classe para botões com ícones que não precisam de background */
+.icon-btn {
+  background-color: transparent !important;
+  padding: 0.4em;
+}
+
+/* Outros botões mantêm o background padrão */
+button:not(.icon-btn) {
+  background-color: #1a1a1a;
+}
+
 button:hover {
   border-color: #646cff;
 }
@@ -73,7 +84,7 @@ button:focus-visible {
   a:hover {
     color: #747bff;
   }
-  button {
+  button:not(.icon-btn) {
     background-color: #f9f9f9;
   }
 }
