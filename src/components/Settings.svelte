@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { onMount } from 'svelte';
+  import { onMount, onDestroy } from 'svelte';
   import { breathingStore } from '../stores/breathingStore';
   import { audioStore } from '../stores/audioStore';
   
@@ -12,13 +12,27 @@
     volume: 0.7
   };
   
+  // Handle Escape key press
+  function handleKeydown(event: KeyboardEvent) {
+    if (event.key === 'Escape' && showSettings) {
+      showSettings = false;
+    }
+  }
+  
   // Subscribe to the breathingStore to get current settings
   onMount(() => {
+    // Add keyboard event listener
+    window.addEventListener('keydown', handleKeydown);
+    
     const unsubscribe = breathingStore.subscribe(state => {
       settings = { ...state.settings };
     });
     
-    return unsubscribe;
+    return () => {
+      // Remove keyboard event listener
+      window.removeEventListener('keydown', handleKeydown);
+      unsubscribe();
+    };
   });
   
   // Save settings to store
@@ -55,54 +69,54 @@
   
   {#if showSettings}
     <div class="settings-modal">
-      <div class="settings-content p-6 rounded-lg shadow-lg">
-        <h2 class="text-xl font-bold mb-4">Breathing Settings</h2>
+      <div class="settings-content card p-6 rounded-lg shadow-lg variant-filled-surface">
+        <h2 class="text-2xl font-bold mb-4">Breathing Settings</h2>
         
         <div class="settings-section mb-4">
-          <h3 class="text-lg font-semibold mb-2">Breathing Duration (seconds)</h3>
+          <h3 class="text-xl font-semibold mb-2">Breathing Duration (seconds)</h3>
           
           <div class="form-field mb-2">
-            <label for="inhaleDuration">Inhale:</label>
+            <label for="inhaleDuration" class="label font-medium">Inhale:</label>
             <input 
               type="number" 
               id="inhaleDuration" 
               bind:value={settings.inhaleDuration} 
               min="1" 
               max="10" 
-              class="input p-2 rounded"
+              class="input variant-form-material"
             />
           </div>
           
           <div class="form-field mb-2">
-            <label for="holdDuration">Hold:</label>
+            <label for="holdDuration" class="label font-medium">Hold:</label>
             <input 
               type="number" 
               id="holdDuration" 
               bind:value={settings.holdDuration} 
               min="1" 
               max="15" 
-              class="input p-2 rounded"
+              class="input variant-form-material"
             />
           </div>
           
           <div class="form-field mb-2">
-            <label for="exhaleDuration">Exhale:</label>
+            <label for="exhaleDuration" class="label font-medium">Exhale:</label>
             <input 
               type="number" 
               id="exhaleDuration" 
               bind:value={settings.exhaleDuration} 
               min="1" 
               max="15" 
-              class="input p-2 rounded"
+              class="input variant-form-material"
             />
           </div>
         </div>
         
         <div class="settings-section mb-4">
-          <h3 class="text-lg font-semibold mb-2">Sound Settings</h3>
+          <h3 class="text-xl font-semibold mb-2">Sound Settings</h3>
           
           <div class="form-field mb-2">
-            <label for="soundsEnabled">Enable Sounds:</label>
+            <label for="soundsEnabled" class="label font-medium">Enable Sounds:</label>
             <input 
               type="checkbox" 
               id="soundsEnabled" 
@@ -112,7 +126,7 @@
           </div>
           
           <div class="form-field mb-2">
-            <label for="volume">Volume:</label>
+            <label for="volume" class="label font-medium">Volume:</label>
             <input 
               type="range" 
               id="volume" 
@@ -120,7 +134,7 @@
               min="0" 
               max="1" 
               step="0.1" 
-              class="range"
+              class="range variant-form-material"
               disabled={!settings.soundsEnabled}
             />
           </div>
@@ -129,7 +143,7 @@
         <div class="buttons-container flex justify-end space-x-2 mt-4">
           <button 
             on:click={() => showSettings = false} 
-            class="btn variant-ghost"
+            class="btn variant-soft-surface"
           >
             Cancel
           </button>
@@ -152,15 +166,15 @@
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
+    background-color: rgba(0, 0, 0, 0.9);
     display: flex;
     align-items: center;
     justify-content: center;
     z-index: 1000;
+    backdrop-filter: blur(4px);
   }
   
   .settings-content {
-    background-color: var(--color-surface-100);
     max-width: 90%;
     width: 400px;
     max-height: 90vh;
@@ -171,6 +185,7 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
+    gap: 1rem;
   }
   
   .form-field label {
@@ -179,5 +194,18 @@
   
   .input, .range {
     width: 200px;
+  }
+
+  /* Melhorar contraste e legibilidade dos inputs */
+  :global(.input), :global(.range) {
+    background-color: var(--color-surface-200);
+    color: var(--color-surface-900);
+    border: 1px solid var(--color-surface-400);
+  }
+
+  /* Estilo para dark mode */
+  :global(.dark) .settings-content {
+    background-color: var(--color-surface-800);
+    color: var(--color-surface-50);
   }
 </style>

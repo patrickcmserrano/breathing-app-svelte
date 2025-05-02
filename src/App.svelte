@@ -47,19 +47,21 @@
     </div>
   </div>
   
-  <div class="flex flex-col items-center justify-center flex-grow">
-    <h1 class="text-3xl font-bold text-center mb-8">4-7-8 Breathing App</h1>
+  <div class="flex flex-col items-center flex-grow">
+    <h1 class="text-3xl font-bold text-center mb-12">4-7-8 Breathing App</h1>
     
-    {#if breathingSettings}
-      <BreathingCycle 
-        bind:this={breathingCycleComponent}
-        inhaleDuration={breathingSettings.inhaleDuration}
-        holdDuration={breathingSettings.holdDuration}
-        exhaleDuration={breathingSettings.exhaleDuration}
-      />
-    {:else}
-      <div class="loading">Loading settings...</div>
-    {/if}
+    <div class="breathing-container flex-grow flex items-center justify-center">
+      {#if breathingSettings}
+        <BreathingCycle 
+          bind:this={breathingCycleComponent}
+          inhaleDuration={breathingSettings.inhaleDuration}
+          holdDuration={breathingSettings.holdDuration}
+          exhaleDuration={breathingSettings.exhaleDuration}
+        />
+      {:else}
+        <div class="loading">Loading settings...</div>
+      {/if}
+    </div>
   </div>
   
   <footer class="mt-auto py-4 text-center">
