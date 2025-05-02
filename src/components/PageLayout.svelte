@@ -3,7 +3,7 @@
   import NavMenu from './NavMenu.svelte';
   
   export let title: string = '';
-  export let currentPage: 'home' | 'about' | 'copyright' = 'home';
+  export let currentPage: 'home' | 'about' | 'copyright' | 'privacy' = 'home';
 </script>
 
 <div class="page-container">

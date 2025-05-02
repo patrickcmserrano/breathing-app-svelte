@@ -1,7 +1,7 @@
 <script lang="ts">
   import { _ } from '../lib/i18n';
   import PageLayout from '../components/PageLayout.svelte';
-  import { push } from 'svelte-spa-router';
+  import { link } from 'svelte-spa-router';
 
   function resetCookieConsent() {
     localStorage.removeItem('cookiesConsent');
@@ -9,7 +9,7 @@
   }
 </script>
 
-<PageLayout>
+<PageLayout currentPage="privacy" title={$_('privacy.title')}>
   <main class="p-6 max-w-4xl mx-auto space-y-6">
     <h1 class="text-3xl font-bold">{$_('privacy.title')}</h1>
     
@@ -36,12 +36,13 @@
     </div>
     
     <div class="mt-8 flex gap-4">
-      <button 
-        on:click={() => push('/')} 
+      <a 
+        href="#/" 
+        use:link 
         class="inline-block px-5 py-2 bg-primary rounded hover:bg-opacity-90"
       >
         {$_('back')}
-      </button>
+      </a>
       
       <!-- Botão para resetar o consentimento de cookies (apenas para desenvolvimento) -->
       <button 
