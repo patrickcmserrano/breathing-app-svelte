@@ -6,11 +6,13 @@ export interface BreathingState {
   currentPhase: PhaseType | string;
   timeRemaining: number;
   isRunning: boolean;
+  currentCycle: number;
   settings: {
     inhaleDuration: number;
     holdDuration: number;
     exhaleDuration: number;
     restDuration: number;
+    maxCycles: number;
     soundsEnabled: boolean;
     volume: number;
   }
@@ -24,10 +26,11 @@ const getSavedSettings = () => {
     if (savedSettings) {
       try {
         const parsed = JSON.parse(savedSettings);
-        // Ensure restDuration is included in existing saved settings
+        // Ensure restDuration is included in existing saved settings and maxCycles is a number
         return {
           ...parsed,
-          restDuration: parsed.restDuration ?? 2
+          restDuration: parsed.restDuration ?? 2,
+          maxCycles: parsed.maxCycles ? Number(parsed.maxCycles) : 4
         };
       } catch (e) {
         console.error('Error parsing saved settings:', e);
@@ -41,6 +44,7 @@ const getSavedSettings = () => {
     holdDuration: 7,
     exhaleDuration: 8,
     restDuration: 2,
+    maxCycles: 4, // Valor padrão alterado para 4 ciclos
     soundsEnabled: true,
     volume: 0.7
   };
@@ -51,6 +55,7 @@ const initialState: BreathingState = {
   currentPhase: 'paused',
   timeRemaining: 0,
   isRunning: false,
+  currentCycle: 0,
   settings: getSavedSettings()
 };
 

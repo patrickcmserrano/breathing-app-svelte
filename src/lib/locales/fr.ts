@@ -1,4 +1,7 @@
 export default {
+  "breathing.cycle": "Cycle",
+  "breathing.rest": "Repos",
+  "settings.max_cycles": "Nombre Maximum de Cycles",
   "app.title": "WebOasis 4-7-8",
   "app.loading_settings": "Chargement des paramètres...",
   "app.breathe_relax": "Prenez un moment pour respirer et vous détendre.",

@@ -11,6 +11,7 @@
     holdDuration: 7,
     exhaleDuration: 8,
     restDuration: 2,
+    maxCycles: 4,
     soundsEnabled: true,
     volume: 0.7
   };
@@ -56,6 +57,9 @@
   
   // Save settings to store
   function saveSettings() {
+    // Ensure maxCycles is a number
+    settings.maxCycles = Number(settings.maxCycles);
+    
     breathingStore.updateSettings(settings);
     
     // Update audio settings
@@ -141,6 +145,19 @@
               bind:value={settings.restDuration} 
               min="0" 
               max="10" 
+              class="input variant-form-material"
+            />
+          </div>
+
+          <div class="form-field mb-2">
+            <label for="maxCycles" class="label font-medium">{$_('settings.max_cycles')}:</label>
+            <input 
+              type="number" 
+              id="maxCycles" 
+              bind:value={settings.maxCycles} 
+              min="0" 
+              max="100" 
+              on:change={() => settings.maxCycles = Number(settings.maxCycles)}
               class="input variant-form-material"
             />
           </div>

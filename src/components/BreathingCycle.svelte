@@ -23,10 +23,12 @@
   export let holdDuration = 7;
   export let exhaleDuration = 8;
   export let restDuration = 2;
+  export let maxCycles = 4; // Accept maxCycles as a prop with default of 4
 
   let currentPhase: PhaseType = PHASE.PAUSED;
   let timeRemaining = 0;
   let isRunning = false;
+  let currentCycle = 0;
   let timer: number;
 
   // Use Tween for smooth animation scale transitions
@@ -36,11 +38,41 @@
     interpolate: (a, b) => (t: number) => a * (1 - t) + b * t
   });
 
+  // Subscribe to the breathing store to get settings and update local variables
+  const unsubscribe = breathingStore.subscribe(state => {
+    // Update maxCycles from state
+    if (state.settings.maxCycles !== maxCycles) {
+      maxCycles = state.settings.maxCycles;
+    }
+    
+    // Update durations if they changed
+    inhaleDuration = state.settings.inhaleDuration;
+    holdDuration = state.settings.holdDuration;
+    exhaleDuration = state.settings.exhaleDuration;
+    restDuration = state.settings.restDuration;
+    
+    // Update cycle count if it changed in the store
+    if (currentCycle !== state.currentCycle) {
+      currentCycle = state.currentCycle;
+    }
+  });
+
+  onDestroy(() => {
+    if (unsubscribe) unsubscribe();
+  });
+
   // Start the breathing cycle
   export function startBreathing() {
     if (isRunning) return;
     
     isRunning = true;
+    
+    // Only reset cycle count when starting a new session, not when resuming from pause
+    // For paused state, we'll just continue from the current cycle
+    if (currentPhase !== PHASE.PAUSED) {
+      currentCycle = 0;
+    }
+    
     currentPhase = PHASE.INHALE;
     timeRemaining = inhaleDuration;
     
@@ -52,7 +84,8 @@
       ...state,
       currentPhase,
       isRunning,
-      timeRemaining
+      timeRemaining,
+      currentCycle
     }));
     
     timer = window.setInterval(updateTimer, 1000);
@@ -101,17 +134,27 @@
           timeRemaining = restDuration;
           break;
         case PHASE.REST:
+          // Completed one full cycle
+          currentCycle += 1;
+          
+          // Check if we've reached max cycles (if max is set > 0)
+          if (maxCycles > 0 && currentCycle >= maxCycles) {
+            pauseBreathing();
+            return;
+          }
+          
           currentPhase = PHASE.INHALE;
           timeRemaining = inhaleDuration;
           audioStore.playSound('inhale');
           break;
       }
       
-      // Update store with new phase
+      // Update store with new phase and cycle count
       breathingStore.update(state => ({
         ...state,
         currentPhase,
-        timeRemaining
+        timeRemaining,
+        currentCycle
       }));
     }
   }
@@ -166,6 +209,11 @@
   <div class="mt-4 text-center">
     <p class="text-2xl font-bold">{timeRemaining}</p>
     <p class="text-lg capitalize">{$_(getPhaseTranslationKey(currentPhase))}</p>
+    {#if maxCycles > 0}
+      <p class="text-sm mt-1">{$_('breathing.cycle')}: {currentCycle + 1}/{maxCycles}</p>
+    {:else if currentCycle > 0}
+      <p class="text-sm mt-1">{$_('breathing.cycle')}: {currentCycle + 1}/∞</p>
+    {/if}
   </div>
   
   <div class="mt-6">

@@ -48,6 +48,8 @@
           inhaleDuration={breathingSettings.inhaleDuration}
           holdDuration={breathingSettings.holdDuration}
           exhaleDuration={breathingSettings.exhaleDuration}
+          restDuration={breathingSettings.restDuration}
+          maxCycles={breathingSettings.maxCycles}
         />
       {:else}
         <div class="loading">{$_('app.loading_settings')}</div>
