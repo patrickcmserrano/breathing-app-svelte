@@ -28,7 +28,10 @@ jobs:
           node-version: '18'
           cache: 'npm'
       - name: Install dependencies
-        run: npm install
+        run: |
+          rm -rf node_modules
+          rm -f package-lock.json
+          npm install
       - name: Build
         run: npm run build
       # Copy sound files to the dist directory
@@ -39,10 +42,11 @@ jobs:
       # List what's in the dist directory for debugging
       - name: Debug dist directory
         run: ls -la dist
-      # Upload the artifact for GitHub Pages
+      # Upload the artifact for GitHub Pages - using newer version and being explicit about name
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
+          name: github-pages
           path: './dist'
 
   deploy:
