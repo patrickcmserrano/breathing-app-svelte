@@ -91,6 +91,9 @@ const createAudioStore = () => {
         }
       }
       
+      // Update breathing store volume setting as well
+      breathingStore.updateSettings({ volume });
+      
       return {
         ...state,
         volume
