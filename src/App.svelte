@@ -2,11 +2,13 @@
   import Router from 'svelte-spa-router';
   import { push, location } from 'svelte-spa-router';
   import { onMount } from 'svelte';
+  import CookieConsent from './components/CookieConsent.svelte';
   
   // Import routes
   import Home from './routes/Home.svelte';
   import About from './routes/About.svelte';
   import Copyright from './routes/Copyright.svelte';
+  import Privacy from './routes/Privacy.svelte';
   
   // Define routes - using hash-based routing which works well with GitHub Pages
   const routes = {
@@ -18,6 +20,9 @@
     
     // Wildcard parameter
     '/copyright': Copyright,
+    
+    // Privacy policy page
+    '/privacy': Privacy,
     
     // Catch-all, must be last
     '*': Home,
@@ -34,6 +39,7 @@
 </script>
 
 <Router {routes} />
+<CookieConsent />
 
 <style>
   :global(body) {

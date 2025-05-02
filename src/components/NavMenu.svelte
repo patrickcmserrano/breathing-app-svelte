@@ -5,7 +5,7 @@
   import { link } from 'svelte-spa-router';
   
   // Prop para a página atual, para destacar o item de menu correto
-  export let currentPage: 'home' | 'about' | 'copyright' = 'home';
+  export let currentPage: 'home' | 'about' | 'copyright' | 'privacy' = 'home';
 </script>
 
 <div class="menu">
@@ -37,6 +37,13 @@
             <strong>{$_('nav.copyright')}</strong>
           {:else}
             <a href="#/copyright" use:link>{$_('nav.copyright')}</a>
+          {/if}
+        </li>
+        <li>
+          {#if currentPage === 'privacy'}
+            <strong>{$_('nav.privacy')}</strong>
+          {:else}
+            <a href="#/privacy" use:link>{$_('nav.privacy')}</a>
           {/if}
         </li>
       </ul>

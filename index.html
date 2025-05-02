@@ -5,6 +5,24 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>WebOasis 4-7-8</title>
     <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-L0N2T9B4D6"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      
+      // Configuração padrão com consentimento necessário
+      gtag('config', 'G-L0N2T9B4D6', {
+        'cookie_flags': 'max-age=7200;secure;samesite=none',
+        'anonymize_ip': true
+      });
+      
+      // Configuração de consentimento padrão (inativo até o usuário aceitar)
+      gtag('consent', 'default', {
+        'analytics_storage': 'denied'
+      });
+    </script>
     <script>
       // Handle redirects from 404.html
       (function() {
