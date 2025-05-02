@@ -6,6 +6,9 @@
   import About from './routes/About.svelte';
   import Copyright from './routes/Copyright.svelte';
   
+  // Get the base path from Vite environment if available
+  const basePath = import.meta.env.BASE_URL || '/';
+  
   // Define routes
   const routes = {
     // Exact path

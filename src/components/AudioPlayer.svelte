@@ -5,15 +5,15 @@
 
   let isPlaying = $state(false);
   let audio: HTMLAudioElement | null = $state(null);
-  let selectedAudio = $state('/sounds/meditation-spiritual-music.mp3');
+  let selectedAudio = $state('./sounds/meditation-spiritual-music.mp3');
 
   // Lista de sons de fundo disponíveis
   const audioOptions = [
-    { value: '/sounds/meditation-spiritual-music.mp3', label: 'audio.meditation' },
-    { value: '/sounds/middle-east-oriental-music.mp3', label: 'audio.oriental' },
-    { value: '/sounds/round-of-fairies-quot-irish-harp.mp3', label: 'audio.irish' },
-    { value: '/sounds/the-voice-of-the-oud.mp3', label: 'audio.oud' },
-    { value: '/sounds/tibetan-singing-bowl.mp3', label: 'audio.tibetan' }
+    { value: './sounds/meditation-spiritual-music.mp3', label: 'audio.meditation' },
+    { value: './sounds/middle-east-oriental-music.mp3', label: 'audio.oriental' },
+    { value: './sounds/round-of-fairies-quot-irish-harp.mp3', label: 'audio.irish' },
+    { value: './sounds/the-voice-of-the-oud.mp3', label: 'audio.oud' },
+    { value: './sounds/tibetan-singing-bowl.mp3', label: 'audio.tibetan' }
   ];
 
   $effect(() => {

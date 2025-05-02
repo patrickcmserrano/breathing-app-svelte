@@ -3,9 +3,9 @@ import { breathingStore } from './breathingStore';
 
 // Define sound paths - these will need to be present in the public/sounds directory
 const soundPaths = {
-  inhale: '/sounds/inhale.mp3',
-  hold: '/sounds/hold.mp3',
-  exhale: '/sounds/exhale.mp3'
+  inhale: './sounds/inhale.mp3',
+  hold: './sounds/hold.mp3',
+  exhale: './sounds/exhale.mp3'
 };
 
 // Audio store type
