@@ -173,7 +173,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-bottom: 2rem; /* Aumentar espaçamento entre o círculo e o contador */
+    margin-bottom: 4rem; /* Aumentado de 2rem para 4rem para criar maior distanciamento */
     box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
     transition: transform 300ms ease-out;
   }
@@ -195,7 +195,7 @@
     .breathing-circle {
       width: 160px;
       height: 160px;
-      margin-bottom: 1.5rem;
+      margin-bottom: 3rem; /* Aumentado para manter a proporção em tablets */
     }
   }
 
@@ -203,7 +203,7 @@
     .breathing-circle {
       width: 140px;
       height: 140px;
-      margin-bottom: 1rem;
+      margin-bottom: 2.5rem; /* Aumentado para manter a proporção em celulares */
     }
   }
 </style>
