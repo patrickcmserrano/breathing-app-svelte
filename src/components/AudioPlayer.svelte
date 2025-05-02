@@ -95,6 +95,7 @@
     color: white;
     border: none;
     cursor: pointer;
+    transition: var(--transition-standard);
   }
   
   button:hover {

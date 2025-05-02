@@ -66,7 +66,7 @@
   </button>
   
   {#if showSettings}
-    <div class="settings-modal">
+    <div class="modal-backdrop">
       <div class="settings-content card p-6 rounded-lg shadow-lg variant-filled-surface">
         <h2 class="text-2xl font-bold mb-4">Breathing Settings</h2>
         
@@ -170,20 +170,6 @@
 </div>
 
 <style>
-  .settings-modal {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.9);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    z-index: 1000;
-    backdrop-filter: blur(4px);
-  }
-  
   .settings-content {
     max-width: 90%;
     width: 400px;
@@ -214,7 +200,7 @@
   }
 
   /* Estilo para dark mode */
-  :global(.dark) .settings-content {
+  :global([data-mode="dark"]) .settings-content {
     background-color: var(--color-surface-800);
     color: var(--color-surface-50);
   }

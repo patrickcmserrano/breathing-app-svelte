@@ -173,6 +173,9 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    margin-bottom: 2rem; /* Aumentar espaçamento entre o círculo e o contador */
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+    transition: transform 300ms ease-out;
   }
 
   .inner-circle {
@@ -181,5 +184,26 @@
     border-radius: 50%;
     background-color: var(--color-surface-100);
     color: var(--color-primary-700);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.05);
+  }
+
+  /* Adicionar responsividade */
+  @media (max-width: 768px) {
+    .breathing-circle {
+      width: 160px;
+      height: 160px;
+      margin-bottom: 1.5rem;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .breathing-circle {
+      width: 140px;
+      height: 140px;
+      margin-bottom: 1rem;
+    }
   }
 </style>

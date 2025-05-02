@@ -3,3 +3,52 @@
 @import '@skeletonlabs/skeleton/optional/presets';
 @import '@skeletonlabs/skeleton/themes/mona';
 @custom-variant dark (&:where([data-mode="dark"], [data-mode="dark"] *));
+
+/* Variáveis CSS comuns */
+:root {
+  --transition-standard: all 0.3s ease;
+  
+  /* Light theme (default) */
+  --color-primary-300: #c4b5fd;  /* Roxo claro */
+  --color-primary-500: #8b5cf6;  /* Roxo médio */
+  --color-primary-700: #6d28d9;  /* Roxo escuro */
+  --color-surface-100: #ffffff;
+  --app-background: #f8fafc;
+  --app-text: #0f172a;
+  
+  /* UI elementos comuns */
+  --modal-backdrop: rgba(0, 0, 0, 0.7);
+  --backdrop-blur: 4px;
+}
+
+/* Dark theme overrides */
+[data-mode="dark"] {
+  --color-primary-300: #d8b4fe;  /* Roxo claro (tema escuro) */
+  --color-primary-500: #a855f7;  /* Roxo médio (tema escuro) */
+  --color-primary-700: #7e22ce;  /* Roxo escuro (tema escuro) */
+  --color-surface-100: #1e293b;
+  --app-background: #0f172a;
+  --app-text: #f8fafc;
+}
+
+/* Estilos base comuns */
+body {
+  background-color: var(--app-background);
+  color: var(--app-text);
+  transition: var(--transition-standard);
+}
+
+/* Classes de utilidade comuns */
+.modal-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: var(--modal-backdrop);
+  backdrop-filter: blur(var(--backdrop-blur));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}

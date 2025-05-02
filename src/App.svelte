@@ -82,26 +82,7 @@
   :global(body) {
     margin: 0;
     padding: 0;
-    transition: background-color 0.3s ease, color 0.3s ease;
     overflow-x: hidden;
     position: relative;
-  }
-
-  :global(.dark) {
-    --color-primary-300: #7dd3fc;
-    --color-primary-500: #0ea5e9;
-    --color-primary-700: #0369a1;
-    --color-surface-100: #1e293b;
-    background-color: #0f172a;
-    color: #f8fafc;
-  }
-
-  :global(.light) {
-    --color-primary-300: #93c5fd;
-    --color-primary-500: #3b82f6;
-    --color-primary-700: #1d4ed8;
-    --color-surface-100: #ffffff;
-    background-color: #f8fafc;
-    color: #0f172a;
   }
 </style>

@@ -272,7 +272,7 @@
     top: 0;
     left: 0;
     overflow: hidden;
-    z-index: 0; /* Alterado de -1 para 0 */
+    z-index: 0;
     pointer-events: none; /* Garante que cliques passem através da animação */
   }
   
@@ -286,16 +286,10 @@
     fill: var(--color-primary-500, rgba(64, 125, 255, 0.5));
     opacity: 0.5;
     transition: transform 0.3s ease-out;
+    transform-origin: center center;
   }
   
-  :global(.dark .blob) {
+  :global([data-mode="dark"] .blob) {
     fill: var(--color-primary-700, rgba(100, 149, 237, 0.4));
-  }
-  
-  /* Mobile optimization */
-  @media (max-width: 768px) {
-    :global(.blob) {
-      transform-origin: center center;
-    }
   }
 </style>
