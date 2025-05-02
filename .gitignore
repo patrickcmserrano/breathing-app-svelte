@@ -16,6 +16,10 @@ dist/
 
 # Test coverage
 coverage/
+coverage/**/*
+.nyc_output
+.coverage
+*.lcov
 
 # TypeScript
 *.tsbuildinfo
