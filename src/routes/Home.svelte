@@ -50,7 +50,7 @@
           exhaleDuration={breathingSettings.exhaleDuration}
         />
       {:else}
-        <div class="loading">Loading settings...</div>
+        <div class="loading">{$_('app.loading_settings')}</div>
       {/if}
     </div>
     
@@ -62,7 +62,7 @@
     
     <footer class="mt-auto py-4 text-center">
       <p class="text-sm text-gray-500">
-        Take a moment to breathe and relax.
+        {$_('app.breathe_relax')}
       </p>
     </footer>
   </div>

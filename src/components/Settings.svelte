@@ -3,6 +3,7 @@
   import IconSettings from '@lucide/svelte/icons/settings';
   import { breathingStore } from '../stores/breathingStore';
   import { audioStore } from '../stores/audioStore';
+  import { _ } from 'svelte-i18n';
   
   let showSettings = false;
   let settings = {
@@ -29,6 +30,14 @@
     }
   }
   
+  // Handle keyboard events for the backdrop
+  function handleBackdropKeydown(event: KeyboardEvent) {
+    if (event.key === 'Enter' || event.key === ' ') {
+      event.preventDefault();
+      showSettings = false;
+    }
+  }
+
   // Subscribe to the breathingStore to get current settings
   onMount(() => {
     // Add keyboard event listener
@@ -68,21 +77,28 @@
   <button 
     on:click={toggleSettings} 
     class="icon-btn"
-    aria-label="Settings"
+    aria-label={$_('settings.button')}
   >
     <IconSettings size="20" />
   </button>
   
   {#if showSettings}
-    <div class="modal-backdrop" on:click={handleBackdropClick}>
+    <div 
+      class="modal-backdrop" 
+      on:click={handleBackdropClick} 
+      on:keydown={handleBackdropKeydown} 
+      tabindex="0" 
+      role="button"
+      aria-label={$_('settings.close')}
+    >
       <div class="settings-content card p-6 rounded-lg shadow-lg variant-filled-surface">
-        <h2 class="text-2xl font-bold mb-4">Breathing Settings</h2>
+        <h2 class="text-2xl font-bold mb-4">{$_('settings.title')}</h2>
         
         <div class="settings-section mb-4">
-          <h3 class="text-xl font-semibold mb-2">Breathing Duration (seconds)</h3>
+          <h3 class="text-xl font-semibold mb-2">{$_('settings.breathing_duration')}</h3>
           
           <div class="form-field mb-2">
-            <label for="inhaleDuration" class="label font-medium">Inhale:</label>
+            <label for="inhaleDuration" class="label font-medium">{$_('settings.inhale')}:</label>
             <input 
               type="number" 
               id="inhaleDuration" 
@@ -94,7 +110,7 @@
           </div>
           
           <div class="form-field mb-2">
-            <label for="holdDuration" class="label font-medium">Hold:</label>
+            <label for="holdDuration" class="label font-medium">{$_('settings.hold')}:</label>
             <input 
               type="number" 
               id="holdDuration" 
@@ -106,7 +122,7 @@
           </div>
           
           <div class="form-field mb-2">
-            <label for="exhaleDuration" class="label font-medium">Exhale:</label>
+            <label for="exhaleDuration" class="label font-medium">{$_('settings.exhale')}:</label>
             <input 
               type="number" 
               id="exhaleDuration" 
@@ -118,7 +134,7 @@
           </div>
 
           <div class="form-field mb-2">
-            <label for="restDuration" class="label font-medium">Rest:</label>
+            <label for="restDuration" class="label font-medium">{$_('settings.rest')}:</label>
             <input 
               type="number" 
               id="restDuration" 
@@ -131,10 +147,10 @@
         </div>
         
         <div class="settings-section mb-4">
-          <h3 class="text-xl font-semibold mb-2">Sound Settings</h3>
+          <h3 class="text-xl font-semibold mb-2">{$_('settings.sound_settings')}</h3>
           
           <div class="form-field mb-2">
-            <label for="soundsEnabled" class="label font-medium">Enable Sounds:</label>
+            <label for="soundsEnabled" class="label font-medium">{$_('settings.enable_sounds')}:</label>
             <input 
               type="checkbox" 
               id="soundsEnabled" 
@@ -144,7 +160,7 @@
           </div>
           
           <div class="form-field mb-2">
-            <label for="volume" class="label font-medium">Volume:</label>
+            <label for="volume" class="label font-medium">{$_('settings.volume')}:</label>
             <input 
               type="range" 
               id="volume" 
@@ -163,13 +179,13 @@
             on:click={() => showSettings = false} 
             class="btn variant-soft-surface"
           >
-            Cancel
+            {$_('settings.cancel')}
           </button>
           <button 
             on:click={saveSettings} 
             class="btn variant-filled-primary"
           >
-            Save
+            {$_('settings.save')}
           </button>
         </div>
       </div>
