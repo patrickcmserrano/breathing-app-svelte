@@ -28,27 +28,18 @@ jobs:
           node-version: '18'
           cache: 'npm'
       - name: Install dependencies
-        run: |
-          rm -rf node_modules package-lock.json
-          npm install
+        run: npm install
       - name: Build
         run: npm run build
-      # Verify the build output directory exists and contains files
-      - name: List build output
-        run: |
-          echo "Build directory contents:"
-          ls -la dist || echo "dist directory does not exist"
-          
-      # Ensure sound files are in the dist directory
-      - name: Copy sounds if needed
+      # Copy sound files to the dist directory
+      - name: Copy sound files to dist
         run: |
           mkdir -p dist/sounds
-          if [ -d "public/sounds" ]; then
-            cp -r public/sounds/* dist/sounds/ || echo "No sound files found"
-          fi
-          echo "Dist sounds directory:"
-          ls -la dist/sounds || echo "sounds directory does not exist"
-          
+          cp -r public/sounds/* dist/sounds/ || echo "Sound files already included in build"
+      # List what's in the dist directory for debugging
+      - name: Debug dist directory
+        run: ls -la dist
+      # Upload the artifact for GitHub Pages
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
