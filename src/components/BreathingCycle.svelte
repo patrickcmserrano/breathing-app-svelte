@@ -16,6 +16,7 @@
   import { Tween } from 'svelte/motion';
   import { breathingStore } from '../stores/breathingStore';
   import { audioStore } from '../stores/audioStore';
+  import { userSessionStore } from '../stores/userSessionStore';
   import { _ } from 'svelte-i18n';
 
   // Default durations in seconds
@@ -30,6 +31,8 @@
   let isRunning = false;
   let currentCycle = 0;
   let timer: number;
+  let mantra = ''; // Store user's mantra
+  let sessionCompleted = false;
 
   // Use Tween for smooth animation scale transitions
   const animationScale = new Tween<number>(1, {
@@ -39,7 +42,7 @@
   });
 
   // Subscribe to the breathing store to get settings and update local variables
-  const unsubscribe = breathingStore.subscribe(state => {
+  const breathingUnsubscribe = breathingStore.subscribe(state => {
     // Update maxCycles from state
     if (state.settings.maxCycles !== maxCycles) {
       maxCycles = state.settings.maxCycles;
@@ -57,8 +60,14 @@
     }
   });
 
+  // Subscribe to user session store to get the mantra
+  const userSessionUnsubscribe = userSessionStore.subscribe(state => {
+    mantra = state.mantra;
+  });
+
   onDestroy(() => {
-    if (unsubscribe) unsubscribe();
+    if (breathingUnsubscribe) breathingUnsubscribe();
+    if (userSessionUnsubscribe) userSessionUnsubscribe();
   });
 
   // Start the breathing cycle
@@ -66,6 +75,7 @@
     if (isRunning) return;
     
     isRunning = true;
+    sessionCompleted = false;
     
     // Only reset cycle count when starting a new session, not when resuming from pause
     // For paused state, we'll just continue from the current cycle
@@ -139,7 +149,7 @@
           
           // Check if we've reached max cycles (if max is set > 0)
           if (maxCycles > 0 && currentCycle >= maxCycles) {
-            pauseBreathing();
+            completeSession();
             return;
           }
           
@@ -157,6 +167,13 @@
         currentCycle
       }));
     }
+  }
+
+  // Complete the breathing session and update session count
+  function completeSession() {
+    pauseBreathing();
+    sessionCompleted = true;
+    userSessionStore.completeSession();
   }
 
   // Map phase to translation key
@@ -205,6 +222,12 @@
       <span class="font-bold text-lg">{$_(getPhaseTranslationKey(currentPhase)).toUpperCase()}</span>
     </div>
   </div>
+
+  {#if mantra && isRunning}
+    <div class="mantra-container mt-2 mb-4">
+      <p class="text-center italic p-2">{mantra}</p>
+    </div>
+  {/if}
   
   <div class="mt-4 text-center">
     <p class="text-2xl font-bold">{timeRemaining}</p>
@@ -221,6 +244,13 @@
       <button on:click={pauseBreathing} class="btn variant-filled-primary">
         {$_('breathing.pause')}
       </button>
+    {:else if sessionCompleted}
+      <div class="flex flex-col items-center">
+        <p class="text-success-500 font-semibold mb-2">{$_('breathing.sessionCompleted')}</p>
+        <button on:click={startBreathing} class="btn variant-filled-primary">
+          {$_('breathing.startNew')}
+        </button>
+      </div>
     {:else}
       <button on:click={startBreathing} class="btn variant-filled-primary">
         {$_('breathing.start')}
@@ -238,7 +268,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-bottom: 4rem; /* Aumentado de 2rem para 4rem para criar maior distanciamento */
+    margin-bottom: 2rem;
     box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
     transition: transform 300ms ease-out;
   }
@@ -255,12 +285,19 @@
     box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.05);
   }
 
+  .mantra-container {
+    max-width: 80%;
+    background-color: rgba(var(--color-surface-500-rgb), 0.1);
+    border-radius: 0.5rem;
+    padding: 0.5rem;
+  }
+
   /* Adicionar responsividade */
   @media (max-width: 768px) {
     .breathing-circle {
       width: 160px;
       height: 160px;
-      margin-bottom: 3rem; /* Aumentado para manter a proporção em tablets */
+      margin-bottom: 1.5rem;
     }
   }
 
@@ -268,7 +305,7 @@
     .breathing-circle {
       width: 140px;
       height: 140px;
-      margin-bottom: 2.5rem; /* Aumentado para manter a proporção em celulares */
+      margin-bottom: 1rem;
     }
   }
 </style>

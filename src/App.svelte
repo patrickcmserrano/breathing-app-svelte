@@ -3,6 +3,7 @@
   import { push, location } from 'svelte-spa-router';
   import { onMount } from 'svelte';
   import CookieConsent from './components/CookieConsent.svelte';
+  import { setupNotificationChecker, cleanupNotificationChecker } from './lib/notificationService';
   
   // Import routes
   import Home from './routes/Home.svelte';
@@ -28,13 +29,24 @@
     '*': Home,
   };
   
-  // Handle any initial routing issues
+  // Handle any initial routing issues and setup notifications
   onMount(() => {
     // If we're on GitHub Pages and somehow end up with an empty location
     // or if the location is missing the hash, redirect to home
     if ($location === '' || !window.location.hash) {
       push('/');
     }
+    
+    // Inicializa o sistema de notificações se a permissão já foi concedida
+    if (window.Notification && Notification.permission === 'granted') {
+      console.log('Initializing notification system on app start');
+      setupNotificationChecker();
+    }
+    
+    // Limpa o verificador de notificações quando o aplicativo é fechado
+    return () => {
+      cleanupNotificationChecker();
+    };
   });
 </script>
 

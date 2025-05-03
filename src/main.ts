@@ -5,6 +5,16 @@ import './lib/i18n' // Import i18n configuration
 import { location } from 'svelte-spa-router'
 import { locale } from 'svelte-i18n'
 import { SUPPORTED_LANGUAGES } from './lib/i18n'
+import { registerServiceWorker, setupNotificationChecker } from './lib/notificationService'
+
+// Registra service worker e configura notificações na inicialização
+if ('Notification' in window && Notification.permission === 'granted') {
+  // Se já temos permissão, configurar o verificador de notificações imediatamente
+  registerServiceWorker().then(() => {
+    console.log('Service worker registrado durante inicialização do app');
+    setupNotificationChecker();
+  });
+}
 
 const app = mount(App, {
   target: document.getElementById('app')!,
